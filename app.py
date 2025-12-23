@@ -2,9 +2,7 @@ import pickle
 import streamlit as st
 import requests
 
-# -----------------------------
-# Fetch poster from TMDB
-# -----------------------------
+
 def fetch_poster(movie_id):
     url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key=4c15b3b3425785aa0b4f18d6611c7f27&language=en-US"
     response = requests.get(url)
@@ -15,9 +13,6 @@ def fetch_poster(movie_id):
         return "https://image.tmdb.org/t/p/w500/" + poster_path
     return "https://via.placeholder.com/500x750?text=No+Image"
 
-# -----------------------------
-# Recommendation function
-# -----------------------------
 def recommend(movie):
     index = movies[movies['title'] == movie].index[0]
     distances = sorted(
@@ -36,13 +31,10 @@ def recommend(movie):
 
     return recommended_movie_names, recommended_movie_posters
 
-# -----------------------------
-# Streamlit UI
-# -----------------------------
+
 st.set_page_config(page_title="Movie Recommender", layout="wide")
 st.header("🎬 Movie Recommender System")
 
-# Load data (USE RELATIVE PATHS)
 movies = pickle.load(open("movie_list.pkl", "rb"))
 similarity = pickle.load(open("similarity.pkl", "rb"))
 
